@@ -77,22 +77,25 @@
                     <td>Login</td>
                     <td>Имя</td>
                     <td>Фамилия</td>
-<!--                    <td>Дата рождения</td>-->
-<!--                    <td>Информация</td>-->
-<!--                    <td>Адрес</td>-->
+                    <td>Дата рождения</td>
+                    <td>Информация</td>
+                    <td>Адрес</td>
                 </tr>
                 <tbody>
                 <tr ng-repeat="s in UserList">
                     <td>{{s.login}}</td>
                     <td>{{s.name}}</td>
                     <td>{{s.lastname}}</td>
-<!--                    <td>{{s.birthDate}}</td>-->
-<!--                    <td>{{s.info}}</td>-->
-<!--                    <td>{{s.address}}</td>-->
+                    <td>{{s.birthDate}}</td>
+                    <td>{{s.info}}</td>
+                    <td>{{s.address}}</td>
 
-<!--                    <td>-->
-<!--                        <button class="btn btn-primary" ng-click="addToCart(p.id)">Добавить в корзину</button>-->
-<!--                    </td>-->
+                    <td>
+                        <button class="btn btn-primary" ng-click="addToCart(p.id)">Редактировать</button>
+                    </td>
+                    <td>
+                        <button class="btn btn-danger" ng-click="deleteStudent(s.id)">Исключить</button>
+                    </td>
                 </tr>
                 </tbody>
             </table>
