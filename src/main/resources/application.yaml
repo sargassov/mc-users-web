@@ -1,0 +1,9 @@
+server:
+  port: 8189
+  servlet:
+    context-path: /app
+spring:
+  datasource:
+    url: jdbc:postgresql://localhost:5432/db
+    username: postgres
+    password: 1111
