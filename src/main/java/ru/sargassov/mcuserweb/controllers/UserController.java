@@ -16,33 +16,33 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @RestController
-@RequestMapping("/users")
+@RequestMapping("/users") // все запросы /users перехватываются здесь
 @RequiredArgsConstructor
-public class UserController {
+public class UserController { //главный контоллер
     private final UserService userService;
     private final UserConverter userConverter;
     private final UserValidator userValidator;
 
     @GetMapping
-    public List<UserDto> getAllUsers() {
+    public List<UserDto> getAllUsers() { //запрос всех юзеров
         return userService.getAllusers().stream().map(userConverter::entityToDto).collect(Collectors.toList());
     }
 
-    @PostMapping
+    @PostMapping //запрос на сохранение нового.
     public ResponseEntity<?> saveNewUser(@RequestBody UserDto userDto) {
         try {
-            userValidator.validate(userDto);
+            userValidator.validate(userDto); //если юзерДто не проходит валидацию на фронт оправится ошибка
         } catch (ValidationException e){
             StringBuilder message = new StringBuilder("");
             for(String s : e.getErrorFieldsMessages()) message.append(s + ",");
             return new ResponseEntity<>(new Notice(HttpStatus.BAD_REQUEST.value(), "Saving user did not pass the verification. " + message.toString()), HttpStatus.BAD_REQUEST);
         }
-        User user = userConverter.dtoToEntity(userDto);
+        User user = userConverter.dtoToEntity(userDto); //если валидация пройдена Дто преобразуется к сущности
         user = userService.save(user);
         return new ResponseEntity<>(new Notice(HttpStatus.OK.value(),"New user " + user.getUsername() + " saved"), HttpStatus.OK);
     }
 
-    @PutMapping
+    @PutMapping //изменение отдельных полей юзера. Вернет либо ошибку либо ОК. Основная его логика на UserService
     public ResponseEntity<?> updateUser(@RequestBody UserDto userDto) {
         if(!userService.update(userDto)){
             return new ResponseEntity<>(new Notice(HttpStatus.NOT_FOUND.value(), "Editable user not found"), HttpStatus.NOT_FOUND);
@@ -51,9 +51,9 @@ public class UserController {
         return new ResponseEntity<>(new Notice(HttpStatus.OK.value(),"All updates " + userDto.getLogin() + " were saved"), HttpStatus.OK);
     }
 
-    @DeleteMapping("/{id}")
+    @DeleteMapping("/{id}") //Удаление юзера по ID
     public ResponseEntity<?> deleteById(@PathVariable Long id) {
-        if(id != 1){
+        if(id != 1){ //Запрет на удаление ROOTового юзера, так как удаление в БД каскадное
             System.out.println("all good delete");
             userService.deleteById(id);
             return new ResponseEntity<>(new Notice(HttpStatus.OK.value(),"User was deleted"), HttpStatus.OK);

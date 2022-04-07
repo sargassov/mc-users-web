@@ -17,7 +17,7 @@
 </head>
 
 <body>
-
+<!--//верхняя панель переадресации-->
 <div class="container" ng-controller="editorController">
     <nav class="navbar navbar-expand-lg navbar-light bg-light">
         <div class="collapse navbar-collapse" id="navbarNav">
@@ -39,7 +39,7 @@
                     <form class="align-middle" ng-submit="tryToAuth()">
                         <div class="input-group input-group-sm" style="padding: 4px;">
                             <input id="navLoginField" class="form-control" ng-model="user.username" type="text"
-                                   aria-describedby="inputGroup-sizing-sm" style="margin-left: 10px;">
+                                   aria-describedby="inputGroup-sizing-sm" style="margin-left: 10px;"><!--//панель логина и пароля-->
 
                             <input id="navPasswordField" class="form-control" ng-model="user.password" type="password"
                                    aria-describedby="inputGroup-sizing-sm" style="margin-left: 10px;">
@@ -70,7 +70,7 @@
     <p></p>
 
     <h6>Вы можете отредактировать данные {{springWebUser.username}} </h6>
-    <form novalidate ng->
+    <form novalidate ng-> <!--//форма для редактирования -->
         <ul>
             <li>
                 <input class="form-control" type="text" placeholder="Имя" ng-model="user.name">

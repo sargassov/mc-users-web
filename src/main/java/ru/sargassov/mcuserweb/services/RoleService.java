@@ -9,7 +9,7 @@ import ru.sargassov.mcuserweb.repositories.RoleRepository;
 @Service
 @RequiredArgsConstructor
 public class RoleService {
-    private final RoleRepository roleRepository;
+    private final RoleRepository roleRepository; //класс, взаимодействующий с репозиторием ролей
 
     public Role getRoleById(long id) {
         return roleRepository.getById(id);

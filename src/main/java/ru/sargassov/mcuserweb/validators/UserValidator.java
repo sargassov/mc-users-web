@@ -11,7 +11,7 @@ import java.util.List;
 
 @Component
 @Data
-public class UserValidator {
+public class UserValidator { //валидатор. Проверяет Дто на ряд исключительных ситуаций с незаполненными полями или совпадающими логинами прежде чем сохранить в базу
     private final UserService userService;
 
 
@@ -39,7 +39,7 @@ public class UserValidator {
             errors.add("Пароль не может быть пустым");
         }
 
-        if (!errors.isEmpty()) {
+        if (!errors.isEmpty()) { //если хоть один IF выполнен, то будет брошено исключение
             throw new ValidationException(errors);
         }
     }

@@ -7,7 +7,7 @@ import java.util.List;
 
 @NoArgsConstructor
 @Data
-public class FieldsValidationError {
+public class FieldsValidationError { //класс для перехвата множественных комментариев о нескольких ошибках сразу
     private List<String> errorFieldsMessages;
 
     public FieldsValidationError(List<String> errorFieldsMessages) {

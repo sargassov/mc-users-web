@@ -12,7 +12,7 @@ import java.util.Collection;
 @Table(name = "users")
 @Data
 @NoArgsConstructor
-public class User {
+public class User { //Основная сущности проекта
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -26,12 +26,12 @@ public class User {
     private String lastname;
 
     @Column(name = "birth_date")
-    private String birthDate;
+    private String birthDate; //дата рождения и в базе и в Дто сохраняется как String
 
     @Column(name = "username")
     private String username;
 
-    @Column(name = "password")
+    @Column(name = "password") //пароль сохраняется к виде закриптовонного хэша
     private String password;
 
     @Column(name = "info")
@@ -41,7 +41,7 @@ public class User {
     private String address;
 
     @ManyToMany
-    @JoinTable(name = "users_roles",
+    @JoinTable(name = "users_roles", //список ролей пользователя
             joinColumns = @JoinColumn(name = "user_id"),
             inverseJoinColumns = @JoinColumn(name = "role_id"))
     private Collection<Role> roles;

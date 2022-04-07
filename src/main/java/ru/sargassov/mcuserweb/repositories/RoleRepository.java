@@ -6,4 +6,5 @@ import ru.sargassov.mcuserweb.entites.Role;
 
 @Repository
 public interface RoleRepository extends JpaRepository<Role, Long> {
+    //Репозиторий ролей
 }

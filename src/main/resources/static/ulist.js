@@ -5,14 +5,14 @@ angular.module('ulist', ['ngStorage']).controller('ulistController', function ($
         $http.defaults.headers.common.Authorization = 'Bearer ' + $localStorage.springWebUser.token
      }
 
-
+// загрузить всех
     $scope.loadUsers = function () {
         $http.get(contextPath + '/users')
             .then(function (response) {
                 $scope.UserList = response.data;
             });
     };
-
+// войти
     $scope.tryToAuth = function () {
         $http.post(contextPath + '/auth', $scope.user)
             .then(function successCallback(response) {
@@ -25,7 +25,7 @@ angular.module('ulist', ['ngStorage']).controller('ulistController', function ($
                 alert('WRONG USERNAME OR PASSWORD');
             });
     };
-
+// выйти
     $scope.tryToLogout = function () {
         $scope.clearUser();
         if ($scope.user.username) {
@@ -35,12 +35,12 @@ angular.module('ulist', ['ngStorage']).controller('ulistController', function ($
             $scope.user.password = null;
         }
     };
-
+// почистить данные пользователя
     $scope.clearUser = function () {
         delete $localStorage.springWebUser;
         $http.defaults.headers.common.Authorization = '';
     };
-
+// удалить пользователя
     $scope.deleteUser = function (id){
         $http.delete(contextPath + '/users/' + id)
             .then(function successCallback(response) {
@@ -50,7 +50,7 @@ angular.module('ulist', ['ngStorage']).controller('ulistController', function ($
                 alert(response.data.message);
             });
     }
-
+// проверка на аутентификацию
     $rootScope.isUserLoggedIn = function () {
         if ($localStorage.springWebUser) {
             return true;
@@ -59,6 +59,6 @@ angular.module('ulist', ['ngStorage']).controller('ulistController', function ($
         }
     };
 
-
+// предварительная загрузка всех пользователей
     $scope.loadUsers();
 });

@@ -1,6 +1,6 @@
 package ru.sargassov.mcuserweb.exceptions;
 
-public class Notice {
+public class Notice { //адаптивный класс обертка для реализации ответов фронту в виде ResponceEntity
     private int statusCode;
     private String message;
 

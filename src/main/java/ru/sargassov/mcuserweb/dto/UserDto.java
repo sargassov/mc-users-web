@@ -8,7 +8,7 @@ import java.util.Calendar;
 import java.util.Collection;
 
 
-public class UserDto {
+public class UserDto { //адаптивный класс для передачи иноформации на фронт
     private Long id;
     private String name;
     private String lastname;

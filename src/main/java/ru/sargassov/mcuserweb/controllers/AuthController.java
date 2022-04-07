@@ -25,7 +25,7 @@ public class AuthController {
     private final JwtTokenUtil jwtTokenUtil;
     private final AuthenticationManager authenticationManager;
 
-    @PostMapping("/auth")
+    @PostMapping("/auth") //регистрационный контроллер либо отправляет токен на фронт, либо ошибку 401
     public ResponseEntity<?> createAuthToken(@RequestBody JwtRequest JwtRequest) {
         try {
             authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(JwtRequest.getUsername(), JwtRequest.getPassword()));

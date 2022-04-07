@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 
 @ControllerAdvice
 @Slf4j
-public class GlobalExceptionHandler {
+public class GlobalExceptionHandler { //глобальные перехватчик исключений
     @ExceptionHandler
     public ResponseEntity<Notice> catchUserNotFoundException(UserNotFoundException e) {
         log.error(e.getMessage(), e);

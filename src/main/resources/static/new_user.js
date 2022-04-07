@@ -5,7 +5,7 @@ angular.module('new_user', ['ngStorage']).controller('new_userController', funct
         $http.defaults.headers.common.Authorization = 'Bearer ' + $localStorage.springWebUser.token
     }
 
-
+// войти
     $scope.tryToAuth = function () {
         $http.post(contextPath + '/auth', $scope.user)
             .then(function successCallback(response) {
@@ -18,7 +18,7 @@ angular.module('new_user', ['ngStorage']).controller('new_userController', funct
                 alert('WRONG USERNAME OR PASSWORD');
             });
     };
-
+// выйти
     $scope.tryToLogout = function () {
         $scope.clearUser();
         if ($scope.user.username) {
@@ -28,12 +28,12 @@ angular.module('new_user', ['ngStorage']).controller('new_userController', funct
             $scope.user.password = null;
         }
     };
-
+// почистить данные пользователя
     $scope.clearUser = function () {
         delete $localStorage.springWebUser;
         $http.defaults.headers.common.Authorization = '';
     };
-
+// проверка на аутентификацию
     $rootScope.isUserLoggedIn = function () {
         if ($localStorage.springWebUser) {
             return true;
@@ -42,15 +42,7 @@ angular.module('new_user', ['ngStorage']).controller('new_userController', funct
         }
     };
 
-    $scope.showCurrentUserInfo = function () {
-        $http.get(contextPath + '/profile')
-            .then(function successCallback(response) {
-                alert('MY NAME IS: ' + response.data.username);
-            }, function errorCallback(response) {
-                alert('UNAUTHORIZED');
-            });
-    }
-
+//сохранение нового пользователя
     $scope.save = function () {
         $http({
             url: contextPath + '/users',

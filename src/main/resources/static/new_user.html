@@ -16,7 +16,7 @@
 </head>
 
 <body>
-
+<!--//верхняя панель переадресации-->
 <div class="container" ng-controller="new_userController">
     <nav class="navbar navbar-expand-lg navbar-light bg-light">
         <div class="collapse navbar-collapse" id="navbarNav">
@@ -39,7 +39,7 @@
                         <div class="input-group input-group-sm" style="padding: 4px;">
                             <input id="navLoginField" class="form-control" ng-model="user.username" type="text"
                                    aria-describedby="inputGroup-sizing-sm" style="margin-left: 10px;">
-
+                            <!--//панель логина и пароля-->
                             <input id="navPasswordField" class="form-control" ng-model="user.password" type="password"
                                    aria-describedby="inputGroup-sizing-sm" style="margin-left: 10px;">
 
@@ -64,7 +64,7 @@
     <script src="new_user.js"></script>
 </div>
 <div class="container" ng-controller="new_userController" ng-show="isUserLoggedIn()" >
-    <p></p>
+    <p></p> <!--//форма для создания юзера -->
     <h3>Создать нового пользователя</h3>
     <p></p>
 

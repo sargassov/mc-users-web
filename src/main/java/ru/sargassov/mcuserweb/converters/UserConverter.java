@@ -6,6 +6,7 @@ import ru.sargassov.mcuserweb.entites.User;
 
 @Component
 public class UserConverter {
+    //конвертер преобразования сущности в дто и обратрно
     public User dtoToEntity(UserDto userDto){
         return new User(userDto);
     }

@@ -16,14 +16,14 @@ import java.util.function.Function;
 import java.util.stream.Collectors;
 
 @Component
-public class JwtTokenUtil {
+public class JwtTokenUtil { //утилита для токена
     @Value("${jwt.secret}")
     private String secret;
 
     @Value("${jwt.lifetime}")
     private Integer jwtLifetime;
 
-    public String generateToken(UserDetails userDetails) {
+    public String generateToken(UserDetails userDetails) { //генератор токена
         Map<String, Object> claims = new HashMap<>();
         List<String> rolesList = userDetails.getAuthorities().stream()
                 .map(GrantedAuthority::getAuthority)
