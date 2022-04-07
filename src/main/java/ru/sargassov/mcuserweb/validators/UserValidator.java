@@ -1,21 +1,19 @@
 package ru.sargassov.mcuserweb.validators;
 
+import lombok.Data;
 import org.springframework.stereotype.Component;
 import ru.sargassov.mcuserweb.dto.UserDto;
 import ru.sargassov.mcuserweb.exceptions.ValidationException;
+import ru.sargassov.mcuserweb.services.UserService;
 
 import java.util.ArrayList;
 import java.util.List;
 
 @Component
+@Data
 public class UserValidator {
-    private String name;
-    private String lastname;
-    private String birthDate;
-    private String login;
-    private String password;
-    private String info;
-    private String address;
+    private final UserService userService;
+
 
     public void validate(UserDto userDto) {
         List<String> errors = new ArrayList<>();
@@ -31,11 +29,11 @@ public class UserValidator {
         if (userDto.getLastname().isBlank()) {
             errors.add("Фамилия должна быть заполнена");
         }
-        if (userDto.getInfo().isBlank()) {
-            errors.add("Поле \"О себе\" должно быть заполнено");
-        }
         if (userDto.getLogin().isBlank()) {
             errors.add("Логин не может быть пустым");
+        }
+        if (userService.isResident(userDto.getLogin())) {
+            errors.add("Логин не может повторяться");
         }
         if (userDto.getPassword().isBlank()) {
             errors.add("Пароль не может быть пустым");

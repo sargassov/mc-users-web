@@ -1,6 +1,6 @@
 package ru.sargassov.mcuserweb.exceptions;
 
-public class AppError {
+public class Notice {
     private int statusCode;
     private String message;
 
@@ -20,10 +20,10 @@ public class AppError {
         this.message = message;
     }
 
-    public AppError() {
+    public Notice() {
     }
 
-    public AppError(int statusCode, String message) {
+    public Notice(int statusCode, String message) {
         this.statusCode = statusCode;
         this.message = message;
     }

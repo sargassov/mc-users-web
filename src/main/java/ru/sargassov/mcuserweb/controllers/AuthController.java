@@ -13,7 +13,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 import ru.sargassov.mcuserweb.dto.JwtRequest;
 import ru.sargassov.mcuserweb.dto.JwtResponse;
-import ru.sargassov.mcuserweb.exceptions.AppError;
+import ru.sargassov.mcuserweb.dto.UserDto;
+import ru.sargassov.mcuserweb.exceptions.Notice;
 import ru.sargassov.mcuserweb.services.UserService;
 import ru.sargassov.mcuserweb.utils.JwtTokenUtil;
 
@@ -25,13 +26,13 @@ public class AuthController {
     private final AuthenticationManager authenticationManager;
 
     @PostMapping("/auth")
-    public ResponseEntity<?> createAuthToken(@RequestBody JwtRequest authRequest) {
+    public ResponseEntity<?> createAuthToken(@RequestBody JwtRequest JwtRequest) {
         try {
-            authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(authRequest.getUsername(), authRequest.getPassword()));
+            authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(JwtRequest.getUsername(), JwtRequest.getPassword()));
         } catch (BadCredentialsException e) {
-            return new ResponseEntity<>(new AppError(HttpStatus.UNAUTHORIZED.value(), "Incorrect username or password"), HttpStatus.UNAUTHORIZED);
+            return new ResponseEntity<>(new Notice(HttpStatus.UNAUTHORIZED.value(), "Incorrect username or password"), HttpStatus.UNAUTHORIZED);
         }
-        UserDetails userDetails = userService.loadUserByUsername(authRequest.getUsername());
+        UserDetails userDetails = userService.loadUserByUsername(JwtRequest.getUsername());
         String token = jwtTokenUtil.generateToken(userDetails);
         return ResponseEntity.ok(new JwtResponse(token));
     }

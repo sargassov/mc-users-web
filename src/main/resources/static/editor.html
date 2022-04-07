@@ -1,6 +1,7 @@
+
 <!doctype html>
 
-<html ng-app="ulist">
+<html ng-app="editor">
 
 <head>
     <meta charset="utf-8">
@@ -12,12 +13,12 @@
 
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.8.0/angular.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/ngStorage/0.3.11/ngStorage.min.js"></script>
-    <script src="ulist.js"></script>
+    <script src="editor.js"></script>
 </head>
 
 <body>
 
-<div class="container" ng-controller="ulistController">
+<div class="container" ng-controller="editorController">
     <nav class="navbar navbar-expand-lg navbar-light bg-light">
         <div class="collapse navbar-collapse" id="navbarNav">
             <ul class="navbar-nav">
@@ -63,60 +64,39 @@
     <script src="editor.js"></script>
     <script src="new_user.js"></script>
 </div>
-
-<div class="container" ng-controller="ulistController" ng-show="isUserLoggedIn()">
+<div class="container" ng-controller="editorController" ng-show="isUserLoggedIn()" >
     <p></p>
-    <h3>Список пользователей</h3>
+    <h3>Редактирование </h3>
     <p></p>
 
-    <div class="row g-2">
+    <h6>Вы можете отредактировать данные {{springWebUser.username}} </h6>
+    <form novalidate ng->
+        <ul>
+            <li>
+                <input class="form-control" type="text" placeholder="Имя" ng-model="user.name">
+            </li>
+            <li>
+                <input class="form-control" type="text" placeholder="Фамилия" ng-model="user.lastname">
+            </li>
+            <li>
+                <input class="form-control" type="date" placeholder="День рождения" ng-model="user.birthDate">
+            </li>
+            <li>
+                <input class="form-control" type="text" placeholder="Адрес" ng-model="user.address">
+            </li>
+            <li>
+                <input class="form-control" type="text" placeholder="Можете написать о себе" ng-model="user.info">
+            </li>
+            <li>
+                <input class="form-control" type="text" placeholder="Пароль" ng-model="user.password">
+            </li>
+        </ul>
 
-        <div class="col-sm-6 col-md-10">
-            <table class="table table-hover">
-                <tr>
-                    <td>Login</td>
-                    <td>Имя</td>
-                    <td>Фамилия</td>
-                    <td>Дата рождения</td>
-                    <td>Информация</td>
-                    <td>Адрес</td>
-                </tr>
-                <tbody>
-                <tr ng-repeat="s in UserList">
-                    <td>{{s.login}}</td>
-                    <td>{{s.name}}</td>
-                    <td>{{s.lastname}}</td>
-                    <td>{{s.birthDate}}</td>
-                    <td>{{s.info}}</td>
-                    <td>{{s.address}}</td>
+        <button class="btn btn-primary" ng-click="edit()" ng-show="isUserLoggedIn()">Изменить выбранное</button>
+        <button class="btn btn-secondary" ng-click="clearForm()" ng-show="isUserLoggedIn()">Очистить форму</button>
 
-                    <td>
-                        <button class="btn btn-danger" ng-click="deleteUser(s.id)">Исключить</button>
-                    </td>
-                </tr>
-                </tbody>
-            </table>
-
-        </div>
-    </div>
+    </form>
 </div>
-
 
 </body>
 </html>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

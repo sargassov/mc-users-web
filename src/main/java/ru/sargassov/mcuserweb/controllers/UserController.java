@@ -1,11 +1,14 @@
 package ru.sargassov.mcuserweb.controllers;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import ru.sargassov.mcuserweb.exceptions.UserNotFoundException;
+import ru.sargassov.mcuserweb.exceptions.Notice;
 import ru.sargassov.mcuserweb.converters.UserConverter;
 import ru.sargassov.mcuserweb.dto.UserDto;
 import ru.sargassov.mcuserweb.entites.User;
+import ru.sargassov.mcuserweb.exceptions.ValidationException;
 import ru.sargassov.mcuserweb.services.UserService;
 import ru.sargassov.mcuserweb.validators.UserValidator;
 
@@ -25,29 +28,37 @@ public class UserController {
         return userService.getAllusers().stream().map(userConverter::entityToDto).collect(Collectors.toList());
     }
 
-    @GetMapping("/{id}")
-    public UserDto getProductById(@PathVariable Long id) {
-        User user = (User) userService.findById(id).orElseThrow(() -> new UserNotFoundException("User not found, id: " + id));
-        return userConverter.entityToDto(user);
-    }
-
     @PostMapping
-    public UserDto saveNewUser(@RequestBody UserDto userDto) {
-        userValidator.validate(userDto);
+    public ResponseEntity<?> saveNewUser(@RequestBody UserDto userDto) {
+        try {
+            userValidator.validate(userDto);
+        } catch (ValidationException e){
+            StringBuilder message = new StringBuilder("");
+            for(String s : e.getErrorFieldsMessages()) message.append(s + ",");
+            return new ResponseEntity<>(new Notice(HttpStatus.BAD_REQUEST.value(), "Saving user did not pass the verification. " + message.toString()), HttpStatus.BAD_REQUEST);
+        }
         User user = userConverter.dtoToEntity(userDto);
         user = userService.save(user);
-        return userConverter.entityToDto(user);
+        return new ResponseEntity<>(new Notice(HttpStatus.OK.value(),"New user " + user.getUsername() + " saved"), HttpStatus.OK);
     }
 
     @PutMapping
-    public UserDto updateUser(@RequestBody UserDto userDto) {
-        userValidator.validate(userDto);
-        User user = userService.update(userDto);
-        return userConverter.entityToDto(user);
+    public ResponseEntity<?> updateUser(@RequestBody UserDto userDto) {
+        if(!userService.update(userDto)){
+            return new ResponseEntity<>(new Notice(HttpStatus.NOT_FOUND.value(), "Editable user not found"), HttpStatus.NOT_FOUND);
+        }
+
+        return new ResponseEntity<>(new Notice(HttpStatus.OK.value(),"All updates " + userDto.getLogin() + " were saved"), HttpStatus.OK);
     }
 
     @DeleteMapping("/{id}")
-    public void deleteById(@PathVariable Long id) {
-        userService.deleteById(id);
+    public ResponseEntity<?> deleteById(@PathVariable Long id) {
+        if(id != 1){
+            System.out.println("all good delete");
+            userService.deleteById(id);
+            return new ResponseEntity<>(new Notice(HttpStatus.OK.value(),"User was deleted"), HttpStatus.OK);
+        }
+        System.out.println("mistake delete");
+        return new ResponseEntity<>(new Notice(HttpStatus.BAD_REQUEST.value(), "Brian Eno can't be deteted"), HttpStatus.BAD_REQUEST);
     }
 }

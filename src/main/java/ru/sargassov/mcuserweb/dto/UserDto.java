@@ -4,6 +4,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import ru.sargassov.mcuserweb.entites.User;
 
+import java.util.Calendar;
 import java.util.Collection;
 
 
@@ -20,6 +21,7 @@ public class UserDto {
 
 
     public UserDto(User user) {
+        id = user.getId();
         name = user.getName();
         lastname = user.getLastname();
         birthDate = user.getBirthDate();
@@ -28,6 +30,10 @@ public class UserDto {
         info = user.getInfo();
         address = user.getAddress();
         roles = user.getRoles();
+    }
+
+    private UserDto(){
+
     }
 
     public Long getId() {

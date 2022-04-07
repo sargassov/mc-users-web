@@ -1,4 +1,4 @@
-angular.module('index', ['ngStorage']).controller('indexController', function ($scope, $rootScope, $http, $localStorage) {
+angular.module('editor', ['ngStorage']).controller('editorController', function ($scope, $rootScope, $http, $localStorage) {
     const contextPath = 'http://localhost:8189/app';
 
     if ($localStorage.springWebUser) {
@@ -12,15 +12,12 @@ angular.module('index', ['ngStorage']).controller('indexController', function ($
                 if (response.data.token) {
                     $http.defaults.headers.common.Authorization = 'Bearer ' + response.data.token;
                     $localStorage.springWebUser = {username: $scope.user.username, token: response.data.token};
+
                 }
             }, function errorCallback(response) {
                 alert('WRONG USERNAME OR PASSWORD');
             });
     };
-
-    function setLogin(variable, val){
-        window[variable] = val;
-    }
 
     $scope.tryToLogout = function () {
         $scope.clearUser();
@@ -45,5 +42,31 @@ angular.module('index', ['ngStorage']).controller('indexController', function ($
         }
     };
 
+    $scope.loadUsers = function () {
+        $http.get(contextPath + '/users')
+            .then(function (response) {
+                $scope.UserList = response.data;
+            });
+    };
 
+    $scope.edit = function () {
+        var user = {
+            login: $localStorage.springWebUser.username,
+            name: $scope.user.name,
+            lastname: $scope.user.lastname,
+            birthDate: $scope.user.birthDate,
+            address: $scope.user.address,
+            info: $scope.user.info,
+            password: $scope.user.password
+        }
+        $http({
+            url: contextPath + '/users',
+            method: 'PUT',
+            data: user
+        }).then(function successCallback(response) {
+            alert(response.data.message);
+        }, function errorCallback(response) {
+            alert(response.data.message);
+        });
+    };
 });

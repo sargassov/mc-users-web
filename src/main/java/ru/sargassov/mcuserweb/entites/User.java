@@ -5,6 +5,7 @@ import lombok.NoArgsConstructor;
 import ru.sargassov.mcuserweb.dto.UserDto;
 
 import javax.persistence.*;
+import java.util.Calendar;
 import java.util.Collection;
 
 @Entity
@@ -46,15 +47,14 @@ public class User {
     private Collection<Role> roles;
 
     public User(UserDto userDto) {
-        if(userDto.getId() != null)
-            id = userDto.getId();
-        name = userDto.getName();
-        lastname = userDto.getLastname();
-        birthDate = userDto.getBirthDate();
-        username = userDto.getLogin();
-        password = userDto.getPassword();
-        info = userDto.getInfo();
-        address = userDto.getAddress();
-        roles = userDto.getRoles();
+        if(userDto.getId() != null) id = userDto.getId();
+        if(userDto.getLogin() != null) username = userDto.getLogin();
+        if(userDto.getPassword() != null) password = userDto.getPassword();
+        if(userDto.getName() != null) name = userDto.getName();
+        if(userDto.getBirthDate() != null) birthDate = userDto.getBirthDate().substring(0, 10);
+        if(userDto.getLastname() != null) lastname = userDto.getLastname();
+        if(userDto.getInfo() != null) info = userDto.getInfo();
+        if(userDto.getAddress() != null) address = userDto.getAddress();
+        if(userDto.getRoles() != null) roles = userDto.getRoles();
     }
 }
