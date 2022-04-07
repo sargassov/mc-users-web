@@ -20,8 +20,6 @@ angular.module('ulist', ['ngStorage']).controller('ulistController', function ($
                     $http.defaults.headers.common.Authorization = 'Bearer ' + response.data.token;
                     $localStorage.springWebUser = {username: $scope.user.username, token: response.data.token};
 
-                    $scope.user.username = null;
-                    $scope.user.password = null;
                 }
             }, function errorCallback(response) {
                 alert('WRONG USERNAME OR PASSWORD');
@@ -43,6 +41,16 @@ angular.module('ulist', ['ngStorage']).controller('ulistController', function ($
         $http.defaults.headers.common.Authorization = '';
     };
 
+    $scope.deleteUser = function (id){
+        $http.delete(contextPath + '/users/' + id)
+            .then(function successCallback(response) {
+                alert(response.data.message);
+                $scope.loadUsers();
+            }, function errorCallback(response) {
+                alert(response.data.message);
+            });
+    }
+
     $rootScope.isUserLoggedIn = function () {
         if ($localStorage.springWebUser) {
             return true;
@@ -51,14 +59,6 @@ angular.module('ulist', ['ngStorage']).controller('ulistController', function ($
         }
     };
 
-    $scope.showCurrentUserInfo = function () {
-        $http.get(contextPath + '/profile')
-            .then(function successCallback(response) {
-                alert('MY NAME IS: ' + response.data.username);
-            }, function errorCallback(response) {
-                alert('UNAUTHORIZED');
-            });
-    }
 
     $scope.loadUsers();
 });

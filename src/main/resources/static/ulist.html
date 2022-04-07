@@ -28,10 +28,10 @@
                     <a class="nav-link" href="ulist.html">Список пользователей</a>
                 </li>
                 <li class="nav-item" ng-show="isUserLoggedIn()">
-                    <a class="nav-link"  href="cart.html">Добавить нового</a>
+                    <a class="nav-link"  href="new_user.html">Добавить нового</a>
                 </li>
                 <li class="nav-item" ng-show="isUserLoggedIn()">
-                    <a class="nav-link" href="orders.html">Обо мне</a>
+                    <a class="nav-link" href="editor.html">Редактирование</a>
                 </li>
 
                 <li class="nav-item" ng-show="!isUserLoggedIn()">
@@ -60,11 +60,11 @@
 
     <script src="index.js"></script>
     <script src="ulist.js"></script>
-    <script src="cart.js"></script>
-    <script src="orders.js"></script>
+    <script src="editor.js"></script>
+    <script src="new_user.js"></script>
 </div>
 
-<div class="container" ng-controller="ulistController">
+<div class="container" ng-controller="ulistController" ng-show="isUserLoggedIn()">
     <p></p>
     <h3>Список пользователей</h3>
     <p></p>
@@ -94,20 +94,12 @@
                         <button class="btn btn-primary" ng-click="addToCart(p.id)">Редактировать</button>
                     </td>
                     <td>
-                        <button class="btn btn-danger" ng-click="deleteStudent(s.id)">Исключить</button>
+                        <button class="btn btn-danger" ng-click="deleteUser(s.id)">Исключить</button>
                     </td>
                 </tr>
                 </tbody>
             </table>
 
-<!--            <p></p>-->
-<!--            <nav aria-label="Page navigation">-->
-<!--                <ul class="pagination">-->
-<!--                    <li class="page-item" ng-repeat="pageIndex in paginationArray">-->
-<!--                        <button class="page-link" ng-click="loadProducts(pageIndex)">{{pageIndex}}</button>-->
-<!--                    </li>-->
-<!--                </ul>-->
-<!--            </nav>-->
         </div>
     </div>
 </div>

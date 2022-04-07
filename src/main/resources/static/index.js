@@ -13,8 +13,6 @@ angular.module('index', ['ngStorage']).controller('indexController', function ($
                     $http.defaults.headers.common.Authorization = 'Bearer ' + response.data.token;
                     $localStorage.springWebUser = {username: $scope.user.username, token: response.data.token};
 
-                    $scope.user.username = null;
-                    $scope.user.password = null;
                 }
             }, function errorCallback(response) {
                 alert('WRONG USERNAME OR PASSWORD');
@@ -44,12 +42,5 @@ angular.module('index', ['ngStorage']).controller('indexController', function ($
         }
     };
 
-    $scope.showCurrentUserInfo = function () {
-        $http.get('http://localhost:8189/app/api/v1/profile')
-            .then(function successCallback(response) {
-                alert('MY NAME IS: ' + response.data.username);
-            }, function errorCallback(response) {
-                alert('UNAUTHORIZED');
-            });
-    }
+
 });
