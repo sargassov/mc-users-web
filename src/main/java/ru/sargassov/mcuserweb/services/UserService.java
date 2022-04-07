@@ -62,7 +62,7 @@ public class UserService implements UserDetailsService { //класс, взаи�
         if(userDto.getPassword() != null){
             user.setPassword(encoder.encode(user.getPassword()));
         }
-        if(userDto.getBirthDate() != null) user.setBirthDate(userDto.getBirthDate());
+        if(userDto.getBirthDate() != null) user.setBirthDate(userDto.getBirthDate().substring(0, 10));
         if(userDto.getInfo() != null) user.setInfo(userDto.getInfo());
         userRepository.save(user);
 

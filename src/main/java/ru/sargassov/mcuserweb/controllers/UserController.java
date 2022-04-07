@@ -54,11 +54,9 @@ public class UserController { //главный контоллер
     @DeleteMapping("/{id}") //Удаление юзера по ID
     public ResponseEntity<?> deleteById(@PathVariable Long id) {
         if(id != 1){ //Запрет на удаление ROOTового юзера, так как удаление в БД каскадное
-            System.out.println("all good delete");
             userService.deleteById(id);
             return new ResponseEntity<>(new Notice(HttpStatus.OK.value(),"User was deleted"), HttpStatus.OK);
         }
-        System.out.println("mistake delete");
         return new ResponseEntity<>(new Notice(HttpStatus.BAD_REQUEST.value(), "Brian Eno can't be deteted"), HttpStatus.BAD_REQUEST);
     }
 }
