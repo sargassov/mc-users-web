@@ -6,5 +6,4 @@ import org.springframework.context.annotation.PropertySources;
 
 @Configuration //Класс указывающий на местоположение конфиг файла токена
 @PropertySource("secrets.properties")
-public class AppConfig {
-}
+public class AppConfig { }
